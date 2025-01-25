@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZaGram 3D Cube</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    .zagram-title {
+      font-size: 36px;
+      font-family: 'Digital-7', sans-serif;
+      color: silver;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6);
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+
+    .cube-container {
+      perspective: 1000px;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cube {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      transform-style: preserve-3d;
+      transform: rotateX(0deg) rotateY(0deg);
+      animation: rotate 5s linear infinite;
+    }
+
+    .cube div {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid #333;
+      line-height: 150px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .front { transform: rotateY(0deg) translateZ(75px); background-color: #ff5722; }
+    .back { transform: rotateY(180deg) translateZ(75px); background-color: #3f51b5; }
+    .left { transform: rotateY(-90deg) translateZ(75px); background-color: #009688; }
+    .right { transform: rotateY(90deg) translateZ(75px); background-color: #8bc34a; }
+    .top { transform: rotateX(90deg) translateZ(75px); background-color: #ffc107; }
+    .bottom { transform: rotateX(-90deg) translateZ(75px); background-color: #e91e63; }
+
+    @keyframes rotate {
+      from {
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+      to {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ZaGram Title -->
+  <div class="zagram-title">ZaGram</div>
+
+  <!-- Cube Container -->
+  <div class="cube-container">
+    <div class="cube" id="cube">
+      <div class="front">User1</div>
+      <div class="back">Profile</div>
+      <div class="left">Likes</div>
+      <div class="right">Comments</div>
+      <div class="top">Views</div>
+      <div class="bottom">Share</div>
+    </div>
+  </div>
+
+  <script>
+    const cube = document.getElementById('cube');
+    let rotateX = 0;
+    let rotateY = 0;
+
+    // Stop animation on keydown
+    document.addEventListener('keydown', (e) => {
+      cube.style.animation = 'none';
+
+      // Arrow key controls
+      if (e.key === 'ArrowUp') rotateX -= 10;
+      if (e.key === 'ArrowDown') rotateX += 10;
+      if (e.key === 'ArrowLeft') rotateY -= 10;
+      if (e.key === 'ArrowRight') rotateY += 10;
+
+      // Apply the rotation
+      cube.style.transform = rotateX(${rotateX}deg) rotateY(${rotateY}deg);
+    });
+  </script>
+
+</body>
+</html># This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
